@@ -3,6 +3,7 @@ import time
 import requests
 from random import randint
 from html.parser import HTMLParser
+import json
 
 USER_AGENT = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'}
 
@@ -25,7 +26,8 @@ class SearchEngine:
         # implement a check to get only 10 results and also check that URLs must not be duplicated
         for result in raw_results:
             link: str = result.get('href')
-            link = link.lower().rstrip("/")
+            # Lower case and remove slash only during comparison
+            #link = link.lower().rstrip("/")
             if link not in results:
                 results.append(link)
             if len(results) >= 10:
@@ -34,5 +36,15 @@ class SearchEngine:
 
 
 #############Driver code############
-SearchEngine.search("who discovered x-rays in 1885", False)
+#SearchEngine.search("who discovered x-rays in 1885", False)
 ####################################
+
+if __name__ == '__main__':
+    with open("100QueriesSet4.txt", "r") as file:
+        queries_set = file.read().splitlines()
+    result = {}
+    for query in queries_set:
+        result[query] = SearchEngine.search(query)
+    result_json = json.dumps(result)
+    with open("hw1.json", "w+") as file:
+        file.write(result_json)
