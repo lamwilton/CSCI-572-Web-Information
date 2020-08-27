@@ -47,4 +47,4 @@ if __name__ == '__main__':
         result[query] = SearchEngine.search(query)
     result_json = json.dumps(result)
     with open("hw1old.json", "w+") as file:
-        file.write(result_json)
+        file.write(result_json, indent=2, separators=(',', ': '))
