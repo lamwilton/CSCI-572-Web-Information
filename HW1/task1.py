@@ -46,5 +46,5 @@ if __name__ == '__main__':
     for query in queries_set:
         result[query] = SearchEngine.search(query)
     result_json = json.dumps(result)
-    with open("hw1.json", "w+") as file:
+    with open("hw1old.json", "w+") as file:
         file.write(result_json)
