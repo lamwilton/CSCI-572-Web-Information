@@ -1,3 +1,3 @@
-My search engine performs very different to Google. The average percent overlap is only 22.9%.
-The average Spearman's coefficient is -5.696500000000001 which means the overlapping results are mostly uncorrelated.
+My search engine performs very different to Google. The average percent overlap is only 23.2%.
+The average Spearman's coefficient is -6.864071428571427 which means the overlapping results are mostly uncorrelated.
 If we take Google's result as the standard, my search engine performs much worse than Google. Their algorithms works very differently as well.

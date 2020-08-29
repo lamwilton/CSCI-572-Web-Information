@@ -28,7 +28,8 @@ class SearchEngine:
             link: str = result.get('href')
             # Lower case and remove slash only during comparison
             #link = link.lower().rstrip("/")
-            if link not in results:
+            # Remove ads according to new instructions
+            if link not in results and "ad_provider" not in link:
                 results.append(link)
             if len(results) >= 10:
                 return results
@@ -46,5 +47,5 @@ if __name__ == '__main__':
     for query in queries_set:
         result[query] = SearchEngine.search(query)
     result_json = json.dumps(result, indent=2, separators=(',', ': '))
-    with open("hw1old.json", "w+") as file:
+    with open("hw1.json", "w+") as file:
         file.write(result_json)
