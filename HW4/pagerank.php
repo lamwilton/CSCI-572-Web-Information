@@ -85,13 +85,23 @@ if ($results)
     // iterate document fields / values
     foreach ($doc as $field => $value) {
     	// Filter only fields of interest
-    	if ($field == "id" || $field == "og_url"|| $field == "title" || $field == "og_description") {
+    	if ($field == "id" || $field == "og_description") {
 ?>
           <tr>
             <th><?php echo htmlspecialchars($field, ENT_NOQUOTES, 'utf-8'); ?></th>
             <td><?php echo htmlspecialchars($value, ENT_NOQUOTES, 'utf-8'); ?></td>
           </tr>
 <?php
+    	}
+    	// Clickable hyperlinks
+    	if ($field == "og_url"|| $field == "title") {
+    		?>
+    		<tr>
+            <th><?php echo htmlspecialchars($field, ENT_NOQUOTES, 'utf-8'); ?></th>
+            <td><a href=<?php echo $doc->og_url;?>><?php echo htmlspecialchars($value, ENT_NOQUOTES, 'utf-8'); ?></a></td>
+          	</tr>
+          	<?php
+
     	}
 	}
 ?>
