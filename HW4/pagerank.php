@@ -7,7 +7,25 @@ $limit = 10;
 $query = isset($_REQUEST['q']) ? $_REQUEST['q'] : false;
 $results = false;
 // Define additional parameters for pagerank
-$additionalParameters = array( 'sort' => 'pageRankFile desc', 'fl' => '*,field(pageRankFile)');
+$additionalParameters = array( 'fl' => '*,field(pageRankFile)');
+?>
+<html>
+  <head>
+    <title>PHP Solr Client Example</title>
+  </head>
+  <body>
+    <form  accept-charset="utf-8" method="get">
+      <label for="q">Search:</label>
+      <input id="q" name="q" type="text" value="<?php echo htmlspecialchars($query, ENT_QUOTES, 'utf-8'); ?>"/>
+      <input type="checkbox", name="box", value="Y">
+      <label> Pagerank </label>
+      <input type="submit"/>
+      
+    </form>
+<?php    
+if (isset($_GET['box'])) {
+	$additionalParameters = array( 'sort' => 'pageRankFile desc', 'fl' => '*,field(pageRankFile)');
+}
 
 if ($query)
 {
@@ -44,16 +62,7 @@ if ($query)
 }
 
 ?>
-<html>
-  <head>
-    <title>PHP Solr Client Example</title>
-  </head>
-  <body>
-    <form  accept-charset="utf-8" method="get">
-      <label for="q">Search:</label>
-      <input id="q" name="q" type="text" value="<?php echo htmlspecialchars($query, ENT_QUOTES, 'utf-8'); ?>"/>
-      <input type="submit"/>
-    </form>
+
 <?php
 
 // display results
