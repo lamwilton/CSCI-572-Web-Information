@@ -1,4 +1,9 @@
 <?php
+ini_set('display_startup_errors', true);
+error_reporting(E_ERROR);
+ini_set('display_errors', true);
+ini_set('memory_limit', -1);
+
 include 'SpellCorrector.php';
 
 //it will output *october*
