@@ -95,7 +95,7 @@ if ($query)
   $querycorr = SpellCorrector::correct($query);
   if ($querycorr != $query) {
   echo "Did you mean " ; ?>
-  <a href="/pagerank.php?q=<?php  echo $querycorr; ?>"><?php  echo $querycorr; ?> </a> <?php
+  <a href="/main.php?q=<?php  echo $querycorr; ?>"><?php  echo $querycorr; ?> </a> <?php
   }
   // The Apache Solr Client library should be on the include path
   // which is usually most easily accomplished by placing in the
