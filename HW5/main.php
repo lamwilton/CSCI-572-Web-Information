@@ -20,11 +20,66 @@ $additionalParameters = array( 'fl' => '*,field(pageRankFile)');
 <html>
   <head>
     <title>PHP Solr Client Example</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   </head>
   <body>
     <form  accept-charset="utf-8" method="get">
       <label for="q">Search:</label>
       <input id="q" name="q" type="text" value="<?php echo htmlspecialchars($query, ENT_QUOTES, 'utf-8'); ?>"/>
+
+      <!-- Autocomplete script -->
+      <script>
+        
+        var tags = [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ];
+        $( "#q" ).autocomplete({
+          source: function( request, response ) {
+                  var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
+
+                  var queryTerm = $("#q").val();
+                  var splits = queryTerm.split(" ");
+                  var previousTerm = "";
+                  var currTerm = queryTerm;
+                  if(splits.length > 1) {
+                    currTerm =  splits[splits.length - 1];
+                    var lastIndex = queryTerm.lastIndexOf(" ");
+                    previousTerm = queryTerm.substring(0, lastIndex);
+                  }
+                  var url = "http:\/\/localhost:8983/solr/myexample/suggest?q=" + currTerm + "&wt=json";
+                  console.log(url);
+                  console.log(currTerm);
+
+                  $.ajax( {
+                    url: url,
+                    crossDomain: true,
+                    dataType: "jsonp",
+                    jsonp : 'json.wrf',
+                    success: function( data ) {
+                      var suggestionArr = JSON.parse(JSON.stringify(data)).suggest.suggest[currTerm].suggestions;
+                      results = []
+                      for (var i =0; i < suggestionArr.length; i++) {
+                        if(previousTerm != "") {
+                          results[i] = previousTerm + " "  + suggestionArr[i].term;
+                        } else {
+                            results[i] = suggestionArr[i].term;
+                        }                      
+                      }
+                      
+                      console.log(results);
+                    
+                    response( results );
+                    }
+                  } );
+
+                  response( $.grep( tags, function( item ){
+                      return matcher.test( item );
+                  }) );
+              }
+        });
+
+      </script>
+
       <input type="checkbox", name="box", value="Y">
       <label> Pagerank </label>
       <input type="submit"/>
